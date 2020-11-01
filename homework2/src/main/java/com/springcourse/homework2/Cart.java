@@ -7,8 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Cart {
     private List<Product> productList;
-    private final int MIN_PRICE = 50;
-    private final int MAX_PRICE = 300;
+    private final int MIN_RANDOM_PRICE = 50;
+    private final int MAX__RANDOM_PRICE = 300;
 
     public Cart() {
         Product product1 = new Product("Book1", getPrice());
@@ -26,10 +26,23 @@ public class Cart {
     }
 
     public BigDecimal getPrice(){
-        return BigDecimal.valueOf(ThreadLocalRandom.current().nextInt(MIN_PRICE, MAX_PRICE)).movePointLeft(2);
+        return BigDecimal.valueOf(ThreadLocalRandom.current().nextInt(MIN_RANDOM_PRICE, MAX__RANDOM_PRICE));
     }
 
-    public List<Product> getProductList() {
-        return productList;
+    public void getProductList() {
+        productList.forEach(System.out::println);
+    }
+
+    public BigDecimal getSumOfProducts(){
+        BigDecimal sum = productList.stream()
+                .map(p -> p.getPrice())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        return sum;
+    }
+
+    public static void main(String[] args){
+        Cart cart = new Cart();
+        cart.getProductList();
+        System.out.println("Total value :" + cart.getSumOfProducts());
     }
 }
