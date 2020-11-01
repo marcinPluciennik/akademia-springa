@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 
 @Service
-@Profile("start")
-public class Start {
+@Profile("pro")
+public class Pro {
     private Cart cart;
 
     @Value("${vat}")
@@ -22,20 +22,21 @@ public class Start {
     private BigDecimal discount;
 
     @Autowired
-    public Start(Cart cart) {
+    public Pro(Cart cart) {
         this.cart = cart;
     }
 
     @EventListener(ApplicationReadyEvent.class)
     public void printCartAndTotalPrice(){
         cart.getProductList().forEach(System.out::println);
-        System.out.println("Total price (plus version): " + getTotalPrice() + " PLN");
+        System.out.println("Total price (pro version): " + getTotalPrice() + " PLN");
     }
 
     public BigDecimal getTotalPrice(){
         BigDecimal sum = cart.getProductList().stream()
-                .map(p -> p.getPrice().multiply(vat.divide(BigDecimal.valueOf(100)))
-                        .multiply(discount.divide(BigDecimal.valueOf(100))).add(p.getPrice()))
+                .map(p -> p.getPrice().add(p.getPrice().multiply(vat).divide(new BigDecimal(100)))
+                        .subtract(p.getPrice().add(p.getPrice().multiply(vat).divide(new BigDecimal(100)))
+                                .multiply(discount).divide(new BigDecimal(100))))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
         return sum;
     }
