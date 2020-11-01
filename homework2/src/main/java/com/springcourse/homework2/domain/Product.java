@@ -1,4 +1,4 @@
-package com.springcourse.homework2;
+package com.springcourse.homework2.domain;
 
 import java.math.BigDecimal;
 
