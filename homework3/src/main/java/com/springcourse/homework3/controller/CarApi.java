@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -78,5 +79,38 @@ public class CarApi {
             return new ResponseEntity<>(foundCar.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PatchMapping("/editOneParameterOfCar/{id}")
+    public ResponseEntity editOneParameterOfCar(@PathVariable Long id, @RequestBody Map<String, Object> updates){
+        Optional<Car> foundCar = carList.getCarList().stream()
+                .filter(car -> car.getId() == id)
+                .findFirst();
+        if (foundCar.isPresent()){
+            updateOneParameterOfCar(foundCar.get(), updates);
+            return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    private void updateOneParameterOfCar(Car car, Map<String, Object> updates){
+        if (updates.containsKey("mark")){
+            car.setMark((String) updates.get("mark"));
+        }
+        if (updates.containsKey("model")){
+            car.setModel((String) updates.get("model"));
+        }
+        if (updates.containsKey("color")){
+            car.setColor((String) updates.get("color"));
+        }
+        if (updates.containsKey("id")){
+            car.setId((Long) (convertToLong(updates.get("id"))));
+        }
+    }
+
+    public static Long convertToLong(Object o){
+        String stringToConvert = String.valueOf(o);
+        Long convertedLong = Long.parseLong(stringToConvert);
+        return convertedLong;
     }
 }
