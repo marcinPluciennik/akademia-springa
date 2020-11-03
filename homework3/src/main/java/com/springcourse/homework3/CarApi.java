@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/cars")
@@ -25,7 +26,7 @@ public class CarApi {
         return new ResponseEntity(carList, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id){
         Optional<Car> foundCar = carList.stream()
                 .filter(car -> car.getId() == id)
@@ -34,5 +35,16 @@ public class CarApi {
             return new ResponseEntity<>(foundCar.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/colors/{color}")
+    public ResponseEntity<List<Car>> getCarByColor(@PathVariable String color){
+        List<Car> foundCars = carList.stream()
+                .filter(car -> car.getColor() == color)
+                .collect(Collectors.toList());
+        if (foundCars.size() > 0){
+            return new ResponseEntity<>(foundCars, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
