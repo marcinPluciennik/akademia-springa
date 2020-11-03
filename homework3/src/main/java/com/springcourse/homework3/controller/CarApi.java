@@ -45,4 +45,27 @@ public class CarApi {
         }
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }
+
+    @PostMapping
+    public ResponseEntity addCar(@RequestBody Car car){
+        boolean isAdded = carList.getCarList().add(car);
+        if (isAdded){
+            return new ResponseEntity(HttpStatus.CREATED);
+        }
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @PutMapping
+    public ResponseEntity editCar(@RequestBody Car newCar){
+        Optional<Car> foundCar = carList.getCarList().stream()
+                .filter(car -> car.getId() == newCar.getId())
+                .findFirst();
+        if (foundCar.isPresent()){
+            carList.getCarList().remove(foundCar);
+            carList.getCarList().add(newCar);
+            return new ResponseEntity(carList.getCarList().get(carList.getCarList().size() - 1), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }
