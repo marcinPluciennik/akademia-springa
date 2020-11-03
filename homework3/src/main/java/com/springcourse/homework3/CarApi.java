@@ -38,13 +38,13 @@ public class CarApi {
     }
 
     @GetMapping("/colors/{color}")
-    public ResponseEntity<List<Car>> getCarByColor(@PathVariable String color){
+    public ResponseEntity<List<Car>> getCarsByColor(@PathVariable String color){
         List<Car> foundCars = carList.stream()
-                .filter(car -> car.getColor() == color)
+                .filter(car -> car.getColor().equals(color))
                 .collect(Collectors.toList());
         if (foundCars.size() > 0){
             return new ResponseEntity<>(foundCars, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }
 }
