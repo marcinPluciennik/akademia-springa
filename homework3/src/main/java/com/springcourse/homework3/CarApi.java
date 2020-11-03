@@ -2,12 +2,11 @@ package com.springcourse.homework3;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cars")
@@ -26,8 +25,14 @@ public class CarApi {
         return new ResponseEntity(carList, HttpStatus.OK);
     }
 
-    @GetMapping
-    public ResponseEntity getCarById(){
-        return new ResponseEntity(carList, HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<Car> getCarById(@PathVariable Long id){
+        Optional<Car> foundCar = carList.stream()
+                .filter(car -> car.getId() == id)
+                .findFirst();
+        if (foundCar.isPresent()){
+            return new ResponseEntity<>(foundCar.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
