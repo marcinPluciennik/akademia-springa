@@ -19,12 +19,12 @@ public class CarApi {
     @Autowired
     public CarRepository carList;
 
-    @GetMapping
+    @GetMapping("/getCars")
     public ResponseEntity<List<Car>> getCars(){
         return new ResponseEntity(carList, HttpStatus.OK);
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/getCarById/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id){
         Optional<Car> foundCar = carList.getCarList().stream()
                 .filter(car -> car.getId() == id)
@@ -35,7 +35,7 @@ public class CarApi {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/colors/{color}")
+    @GetMapping("/getCarsByColor/{color}")
     public ResponseEntity<List<Car>> getCarsByColor(@PathVariable String color){
         List<Car> foundCars = carList.getCarList().stream()
                 .filter(car -> car.getColor().equals(color))
@@ -46,7 +46,7 @@ public class CarApi {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/addCar")
     public ResponseEntity addCar(@RequestBody Car car){
         boolean isAdded = carList.getCarList().add(car);
         if (isAdded){
@@ -55,17 +55,28 @@ public class CarApi {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping
+    @PutMapping("/editCar")
     public ResponseEntity editCar(@RequestBody Car newCar){
         Optional<Car> foundCar = carList.getCarList().stream()
                 .filter(car -> car.getId() == newCar.getId())
                 .findFirst();
         if (foundCar.isPresent()){
-            carList.getCarList().remove(foundCar);
+            carList.getCarList().remove(foundCar.get());
             carList.getCarList().add(newCar);
             return new ResponseEntity(carList.getCarList().get(carList.getCarList().size() - 1), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @DeleteMapping("/removeCarById/{id}")
+    public ResponseEntity removeCarById(@PathVariable Long id){
+        Optional<Car> foundCar = carList.getCarList().stream()
+                .filter(car -> car.getId() == id)
+                .findFirst();
+        if (foundCar.isPresent()){
+            carList.getCarList().remove(foundCar.get());
+            return new ResponseEntity<>(foundCar.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
