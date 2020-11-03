@@ -1,5 +1,8 @@
-package com.springcourse.homework3;
+package com.springcourse.homework3.controller;
 
+import com.springcourse.homework3.domain.Car;
+import com.springcourse.homework3.repository.CarRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +15,9 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/cars")
 public class CarApi {
-    private List<Car> carList;
 
-    public CarApi() {
-        carList = new ArrayList<>();
-        carList.add(new Car(1L, "Wartburg", "353","Blue"));
-        carList.add(new Car(2L, "Trabant", "601 deluxe","White"));
-        carList.add(new Car(3L, "Syrena", "Sport","Blue"));
-    }
+    @Autowired
+    public CarRepository carList;
 
     @GetMapping
     public ResponseEntity<List<Car>> getCars(){
@@ -28,7 +26,7 @@ public class CarApi {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<Car> getCarById(@PathVariable Long id){
-        Optional<Car> foundCar = carList.stream()
+        Optional<Car> foundCar = carList.getCarList().stream()
                 .filter(car -> car.getId() == id)
                 .findFirst();
         if (foundCar.isPresent()){
@@ -39,7 +37,7 @@ public class CarApi {
 
     @GetMapping("/colors/{color}")
     public ResponseEntity<List<Car>> getCarsByColor(@PathVariable String color){
-        List<Car> foundCars = carList.stream()
+        List<Car> foundCars = carList.getCarList().stream()
                 .filter(car -> car.getColor().equals(color))
                 .collect(Collectors.toList());
         if (foundCars.size() > 0){

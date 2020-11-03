@@ -1,4 +1,4 @@
-package com.springcourse.homework3;
+package com.springcourse.homework3.domain;
 
 public class Car {
     private Long id;
