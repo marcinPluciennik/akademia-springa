@@ -4,6 +4,7 @@ import com.springcourse.homework3.domain.Car;
 import com.springcourse.homework3.repository.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,12 +21,16 @@ public class CarApi {
     @Autowired
     public CarRepository carList;
 
-    @GetMapping("/getCars")
+    @GetMapping(value = "/getCars", produces = {
+            MediaType.APPLICATION_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Car>> getCars(){
         return new ResponseEntity(carList, HttpStatus.OK);
     }
 
-    @GetMapping("/getCarById/{id}")
+    @GetMapping(value = "/getCarById/{id}", produces = {
+            MediaType.APPLICATION_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Car> getCarById(@PathVariable Long id){
         Optional<Car> foundCar = carList.getCarList().stream()
                 .filter(car -> car.getId() == id)
@@ -36,7 +41,9 @@ public class CarApi {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/getCarsByColor/{color}")
+    @GetMapping(value = "/getCarsByColor/{color}", produces = {
+            MediaType.APPLICATION_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Car>> getCarsByColor(@PathVariable String color){
         List<Car> foundCars = carList.getCarList().stream()
                 .filter(car -> car.getColor().equals(color))
@@ -56,7 +63,9 @@ public class CarApi {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping("/editCar")
+    @PutMapping(value = "/editCar", produces = {
+            MediaType.APPLICATION_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity editCar(@RequestBody Car newCar){
         Optional<Car> foundCar = carList.getCarList().stream()
                 .filter(car -> car.getId() == newCar.getId())
@@ -69,7 +78,9 @@ public class CarApi {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/removeCarById/{id}")
+    @DeleteMapping(value = "/removeCarById/{id}", produces = {
+            MediaType.APPLICATION_XML_VALUE,
+            MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity removeCarById(@PathVariable Long id){
         Optional<Car> foundCar = carList.getCarList().stream()
                 .filter(car -> car.getId() == id)
