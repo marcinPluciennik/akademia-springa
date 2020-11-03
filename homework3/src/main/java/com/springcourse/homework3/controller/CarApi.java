@@ -104,7 +104,7 @@ public class CarApi {
             car.setColor((String) updates.get("color"));
         }
         if (updates.containsKey("id")){
-            car.setId((Long) (convertToLong(updates.get("id"))));
+            car.setId((convertToLong(updates.get("id"))));
         }
     }
 
