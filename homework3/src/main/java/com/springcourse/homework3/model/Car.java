@@ -1,6 +1,8 @@
-package com.springcourse.homework3.domain;
+package com.springcourse.homework3.model;
 
-public class Car {
+import org.springframework.hateoas.RepresentationModel;
+
+public class Car extends RepresentationModel {
     private Long id;
     private String mark;
     private String model;

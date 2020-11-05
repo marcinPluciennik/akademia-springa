@@ -1,6 +1,6 @@
 package com.springcourse.homework3.service;
 
-import com.springcourse.homework3.domain.Car;
+import com.springcourse.homework3.model.Car;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
