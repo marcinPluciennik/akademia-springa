@@ -2,6 +2,7 @@ package com.springcourse.homework3.controller;
 
 import com.springcourse.homework3.domain.Car;
 import com.springcourse.homework3.repository.CarRepository;
+import com.springcourse.homework3.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +20,10 @@ import java.util.stream.Collectors;
 public class CarApi {
 
     @Autowired
-    public CarRepository carList;
+    private CarRepository carList;
+
+    @Autowired
+    private CarService carService;
 
     @GetMapping(produces = {
             MediaType.APPLICATION_XML_VALUE,
@@ -98,30 +102,9 @@ public class CarApi {
                 .filter(car -> car.getId() == id)
                 .findFirst();
         if (foundCar.isPresent()){
-            updateOneParameterOfCar(foundCar.get(), updates);
+            carService.updateOneParameterOfCar(foundCar.get(), updates);
             return new ResponseEntity(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    private void updateOneParameterOfCar(Car car, Map<String, Object> updates){
-        if (updates.containsKey("mark")){
-            car.setMark((String) updates.get("mark"));
-        }
-        if (updates.containsKey("model")){
-            car.setModel((String) updates.get("model"));
-        }
-        if (updates.containsKey("color")){
-            car.setColor((String) updates.get("color"));
-        }
-        if (updates.containsKey("id")){
-            car.setId((convertToLong(updates.get("id"))));
-        }
-    }
-
-    public static Long convertToLong(Object o){
-        String stringToConvert = String.valueOf(o);
-        Long convertedLong = Long.parseLong(stringToConvert);
-        return convertedLong;
     }
 }
