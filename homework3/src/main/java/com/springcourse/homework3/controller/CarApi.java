@@ -21,14 +21,14 @@ public class CarApi {
     @Autowired
     public CarRepository carList;
 
-    @GetMapping(value = "/getCars", produces = {
+    @GetMapping(produces = {
             MediaType.APPLICATION_XML_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Car>> getCars(){
         return new ResponseEntity(carList, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getCarById/{id}", produces = {
+    @GetMapping(value = "/id/{id}", produces = {
             MediaType.APPLICATION_XML_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Car> getCarById(@PathVariable Long id){
@@ -41,7 +41,7 @@ public class CarApi {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/getCarsByColor/{color}", produces = {
+    @GetMapping(value = "/color/{color}", produces = {
             MediaType.APPLICATION_XML_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<List<Car>> getCarsByColor(@PathVariable String color){
@@ -54,7 +54,7 @@ public class CarApi {
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }
 
-    @PostMapping("/addCar")
+    @PostMapping
     public ResponseEntity addCar(@RequestBody Car car){
         boolean isAdded = carList.getCarList().add(car);
         if (isAdded){
@@ -63,7 +63,7 @@ public class CarApi {
         return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PutMapping(value = "/editCar", produces = {
+    @PutMapping(produces = {
             MediaType.APPLICATION_XML_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity editCar(@RequestBody Car newCar){
@@ -78,7 +78,7 @@ public class CarApi {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping(value = "/removeCarById/{id}", produces = {
+    @DeleteMapping(value = "/id/{id}", produces = {
             MediaType.APPLICATION_XML_VALUE,
             MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity removeCarById(@PathVariable Long id){
@@ -92,7 +92,7 @@ public class CarApi {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PatchMapping("/editOneParameterOfCar/{id}")
+    @PatchMapping("/id/{id}")
     public ResponseEntity editOneParameterOfCar(@PathVariable Long id, @RequestBody Map<String, Object> updates){
         Optional<Car> foundCar = carList.getCarList().stream()
                 .filter(car -> car.getId() == id)
