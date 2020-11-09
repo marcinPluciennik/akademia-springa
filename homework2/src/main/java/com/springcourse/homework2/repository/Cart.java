@@ -13,20 +13,14 @@ public class Cart {
     private List<Product> productList;
     private final int MIN_RANDOM_PRICE = 50;
     private final int MAX__RANDOM_PRICE = 300;
+    private final int ELEMENT_QUANTITY = 5;
 
     public Cart() {
-        Product product1 = new Product("Book1", getRandomPrice());
-        Product product2 = new Product("Book2", getRandomPrice());
-        Product product3 = new Product("Book3", getRandomPrice());
-        Product product4 = new Product("Book4", getRandomPrice());
-        Product product5 = new Product("Book5", getRandomPrice());
-
         productList = new ArrayList<>();
-        productList.add(product1);
-        productList.add(product2);
-        productList.add(product3);
-        productList.add(product4);
-        productList.add(product5);
+
+        for (int i = 1; i <= ELEMENT_QUANTITY; i++){
+            productList.add(new Product("Book"+ i, getRandomPrice()));
+        }
     }
 
     public BigDecimal getRandomPrice(){
