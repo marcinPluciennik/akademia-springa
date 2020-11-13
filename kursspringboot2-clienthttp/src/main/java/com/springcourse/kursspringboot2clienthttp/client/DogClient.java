@@ -19,10 +19,8 @@ public class DogClient {
 
     public DogClient() {
         this.restTemplate = new RestTemplate();
-        getDogs();
     }
 
-    @EventListener(ApplicationReadyEvent.class)
     private void getDogs() {
         MultiValueMap<String, String> headers = new HttpHeaders();
         headers.add("amount", "2");
@@ -34,5 +32,17 @@ public class DogClient {
                 Dog[].class);
 
         Stream.of(exchange.getBody()).forEach(System.out::println);
+    }
+
+    @EventListener(ApplicationReadyEvent.class)
+    private void addDog() {
+
+        Dog dog = new Dog("Tapsik", "Chow chow");
+        HttpEntity httpEntity = new HttpEntity(dog);
+
+        restTemplate.exchange("http://localhost:8080/dogs/",
+                HttpMethod.POST,
+                httpEntity,
+                void.class);
     }
 }
