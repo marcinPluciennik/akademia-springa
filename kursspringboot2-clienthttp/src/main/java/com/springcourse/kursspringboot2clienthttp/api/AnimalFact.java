@@ -46,6 +46,9 @@ public class AnimalFact {
     private String text;
     @JsonProperty("__v")
     private Integer v;
+
+    private String src;
+
     @JsonProperty("status")
     private Status status;
     @JsonIgnore
@@ -151,6 +154,14 @@ public class AnimalFact {
         this.v = v;
     }
 
+    public String getSrc() {
+        return src;
+    }
+
+    public void setSrc(String src) {
+        this.src = src;
+    }
+
     @JsonProperty("status")
     public Status getStatus() {
         return status;
@@ -184,6 +195,7 @@ public class AnimalFact {
                 ", user='" + user + '\'' +
                 ", text='" + text + '\'' +
                 ", v=" + v +
+                ", src='" + src + '\'' +
                 ", status=" + status +
                 ", additionalProperties=" + additionalProperties +
                 '}';
