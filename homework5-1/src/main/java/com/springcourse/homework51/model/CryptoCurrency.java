@@ -1,5 +1,5 @@
 
-package com.springcourse.homework51;
+package com.springcourse.homework51.model;
 
 import java.util.HashMap;
 import java.util.Map;

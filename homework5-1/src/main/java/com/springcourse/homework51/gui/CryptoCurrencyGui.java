@@ -1,5 +1,7 @@
-package com.springcourse.homework51;
+package com.springcourse.homework51.gui;
 
+import com.springcourse.homework51.controller.CryptoCurrencyController;
+import com.springcourse.homework51.model.CryptoCurrency;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.grid.Grid;
@@ -7,9 +9,6 @@ import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Arrays;
-
 
 @Route
 public class CryptoCurrencyGui extends VerticalLayout {
@@ -24,7 +23,7 @@ public class CryptoCurrencyGui extends VerticalLayout {
                 new Text("Buy cryptocurrency and be rich!"));
 
         Grid<CryptoCurrency> grid = new Grid<>();
-        grid.setItems(Arrays.asList(cryptoCurrencyController.getCryptoCurrencies()));
+        grid.setItems(cryptoCurrencyController.getCryptoCurrencies());
         grid.addColumn(CryptoCurrency::getId).setHeader("ID");
         grid.addColumn(CryptoCurrency::getName).setHeader("NAME");
         grid.addColumn(CryptoCurrency::getSymbol).setHeader("SYMBOL");
