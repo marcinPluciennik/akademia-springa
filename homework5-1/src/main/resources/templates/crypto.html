@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en"><head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>CRYPTOCURRENCY LIST:</h1>
+<p>==============================================</p>
+<tr th:each="cc:${cryptoList}">
+    Id : <td th:text="${cc.getId()}"/><br>
+    Name : <td th:text="${cc.getName()}"/><br>
+    Symbol: <td th:text="${cc.getSymbol()}"/> <br>
+    Rank: <td th:text="${cc.getRank()}"/><br>
+    Is New: <td th:text="${cc.getIsNew()}"/><br>
+    Is Active: <td th:text="${cc.getIsActive()}"/><br>
+    Type: <td th:text="${cc.getType()}"/></p>
+    <p>-----------------------------------------------------------------------------</p>
+</tr>
+<p>==============================================</p>
+
+</body>
+</html>

@@ -6,12 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
 
 @Controller
-public class CryptoCurrencyController {
+public class CryptoControllerVaadin {
 
     private RestTemplate restTemplate;
 
     @Autowired
-    public CryptoCurrencyController() {
+    public CryptoControllerVaadin() {
         this.restTemplate = new RestTemplate();
     }
 
