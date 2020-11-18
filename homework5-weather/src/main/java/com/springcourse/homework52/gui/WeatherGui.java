@@ -79,6 +79,7 @@ public class WeatherGui extends VerticalLayout {
                 add(label, labelCities);
             }
         });
+        setHorizontalComponentAlignment(Alignment.CENTER, component, placeholderField, button);
         add(component, placeholderField, button);
     }
 }
