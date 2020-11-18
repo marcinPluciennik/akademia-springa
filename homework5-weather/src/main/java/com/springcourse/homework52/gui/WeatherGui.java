@@ -36,10 +36,10 @@ public class WeatherGui extends VerticalLayout {
 
             if (weatherController.getCities().length == 0){
                 Dialog dialog = new Dialog();
-                dialog.add(new Text("What is wrong with you? There is no city like "
-                        + placeholderField.getValue() + "! Try again."));
-                dialog.setWidth("400px");
-                dialog.setHeight("150px");
+                dialog.add(new Text("Sorry, there is no city "
+                        + placeholderField.getValue() + " in our database:( Try again."));
+                dialog.setWidth("700px");
+                dialog.setHeight("50px");
                 dialog.open();
             }else if (weatherController.getCities().length == 1){
                 Label label = new Label(placeholderField.getValue().toUpperCase() + ",  "
