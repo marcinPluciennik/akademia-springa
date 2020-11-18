@@ -29,7 +29,6 @@ public class WeatherGui extends VerticalLayout {
         placeholderField.setPlaceholder("Your city");
         Button button = new Button("Confirm");
 
-        setHorizontalComponentAlignment(Alignment.CENTER, component, placeholderField, button);
 
         button.addClickListener(clickEvent -> {
             weatherController.setCityName(placeholderField.getValue().toLowerCase());
