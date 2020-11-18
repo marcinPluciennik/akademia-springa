@@ -82,7 +82,7 @@ public class CurrencyGui extends VerticalLayout {
                     }
                 } catch (Exception e) {
                     Label error = new Label();
-                    error.add(labelField.getValue() + " is not o number! Try again!");
+                    error.add(labelField.getValue() + " is not o number! Try again (e.g. 4.23)!");
                     setHorizontalComponentAlignment(Alignment.CENTER, error);
                     add(error);
                     counter++;
