@@ -32,7 +32,7 @@ public class CarController {
         if (cars.size() > 0){
             return new ResponseEntity<>(cars, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("/carById/{id}")

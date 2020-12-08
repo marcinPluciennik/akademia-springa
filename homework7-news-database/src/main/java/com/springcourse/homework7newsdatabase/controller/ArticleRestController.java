@@ -2,6 +2,7 @@ package com.springcourse.homework7newsdatabase.controller;
 
 import com.springcourse.homework7newsdatabase.dao.ArticleDao;
 import com.springcourse.homework7newsdatabase.model.Article;
+import com.springcourse.homework7newsdatabase.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,12 +13,12 @@ import java.util.List;
 public class ArticleRestController {
 
     private ArticleDao articleDao;
-    private ArticleController articleController;
+    private ArticleService service;
 
     @Autowired
-    public ArticleRestController(ArticleDao articleDao, ArticleController articleController) {
+    public ArticleRestController(ArticleDao articleDao, ArticleService service) {
         this.articleDao = articleDao;
-        this.articleController = articleController;
+        this.service = service;
     }
 
     @GetMapping
@@ -27,7 +28,7 @@ public class ArticleRestController {
 
     @PostMapping
     public void saveArticles(){
-        articleDao.saveNews(articleController.getArticles());
+        articleDao.saveNews(service.getArticles());
     }
 
     @PutMapping
