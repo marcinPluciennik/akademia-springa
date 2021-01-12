@@ -32,19 +32,5 @@ public class CarEditGui extends VerticalLayout {
         Button buttonAdd = new Button("Edit Car");
         Dialog dialog = new Dialog();
 
-        buttonAdd.addClickListener(clickEvent -> {
-            Car car = new Car(service.convertToLong(textFieldId.getValue()), textFieldMark.getValue(),
-                    textFieldModel.getValue(), textFieldColor.getValue());
-            boolean result = carRepository.removeCarById(car.getId());
-            if (result){
-                carRepository.addCar(car);
-                dialog.add(new Text("The Car has been edited!"));
-                dialog.open();
-            }else{
-                dialog.add(new Text("ERROR, there is no id like " + textFieldId.getValue() + "!"));
-                dialog.open();
-            }
-        });
-        add(componentInfo, textFieldId, textFieldMark, textFieldModel, textFieldColor, buttonAdd);
     }
 }
