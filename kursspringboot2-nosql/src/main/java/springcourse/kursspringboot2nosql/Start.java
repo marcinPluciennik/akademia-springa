@@ -19,7 +19,24 @@ public class Start {
     public void init(){
         Toy toyTeddy = new Toy("Miś Uszatek", ToyType.TEDDY_BEAR);
         Toy toyDoll = new Toy("Lala", ToyType.DOLL);
-        toyRepo.save(toyTeddy);
-        toyRepo.save(toyDoll);
+
+        //SAVE
+//        toyRepo.save(toyTeddy);
+//        toyRepo.save(toyDoll);
+
+
+        //UPDATE
+        Toy toy = toyRepo.findById("5ffddbf02e6f9d354a591dc6").get();
+        toy.setToyType(ToyType.DOLL);
+        toyRepo.save(toy);
+
+        //DELETE
+        toyRepo.deleteById("5ffddbf02e6f9d354a591dc6");
+
+
+        //READ
+        //System.out.println(toyRepo.findById("5ffddbf02e6f9d354a591dc6").get());
+        toyRepo.findAll().forEach(System.out::println);
+
     }
 }
