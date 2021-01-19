@@ -58,9 +58,14 @@ public class CurrencyController {
     }
 
     public Currency getCurrency(){
-        Currency currency = restTemplate.getForObject("https://api.exchangeratesapi.io/latest?base=PLN",
-                Currency.class);
-        return currency;
+        try{
+            Currency currency = restTemplate.getForObject("https://api.exchangeratesapi.io/latest?base=PLN",
+                    Currency.class);
+            return currency;
+        }catch (Exception e){
+            return new Currency();
+        }
+
     }
 
     public Rates getRates(){

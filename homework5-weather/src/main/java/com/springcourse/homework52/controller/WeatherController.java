@@ -6,6 +6,8 @@ import com.springcourse.homework52.model.WeatherInCity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+
 
 @Controller
 public class WeatherController {
@@ -17,9 +19,15 @@ public class WeatherController {
     }
 
     public City[] getCities(){
-        City[] cities =  restTemplate.getForObject("https://www.metaweather.com/api/location/search/?query=" +
-                cityName, City[].class);
-        return cities;
+        try{
+            City[] cities =  restTemplate.getForObject("https://www.metaweather.com/api/location/search/?query=" +
+                    cityName, City[].class);
+            return cities;
+        }catch (Exception e){
+            City[] empty = {};
+            return empty;
+        }
+
     }
 
     public Integer getWoeidOneCity(){
