@@ -121,7 +121,7 @@ public class CarControllerTest {
     }
 
     @Test
-    public void editCar() throws Exception{
+    public void shouldEditCar() throws Exception{
         //Given
         Car newCar = new Car(1L, "Trabant", "100L", "Lila", 1980);
 
@@ -142,7 +142,7 @@ public class CarControllerTest {
     }
 
     @Test
-    public void removeCar() throws Exception{
+    public void shouldRemoveCar() throws Exception{
         //When & Then
         mockMvc.perform(delete("/cars/removeCarById/{id}", CAR_ID)
                 .contentType(MediaType.APPLICATION_JSON))
