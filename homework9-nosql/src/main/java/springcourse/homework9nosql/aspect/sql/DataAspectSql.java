@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class DataAspectSql {
-    Long startSave;
-    Long startRead;
+    private Long startSave;
+    private Long startRead;
 
     @Before("@annotation(springcourse.homework9nosql.aspect.sql.BeforeTimeAspectSqlSave)")
     public void startTimeAspectSave(){

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class DataAspectMongoDb {
-    Long startSave;
-    Long startRead;
+    private Long startSave;
+    private Long startRead;
 
     @Before("@annotation(springcourse.homework9nosql.aspect.mongodb.BeforeTimeAspectMongoDbSave)")
     public void startTimeAspectSave(){
