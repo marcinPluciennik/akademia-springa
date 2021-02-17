@@ -38,8 +38,9 @@ public class CarControllerTest {
     @MockBean
     private CarDao carDao;
 
-    @Before
-    public void init(){
+    @Test
+    public void shouldGetCars() throws Exception{
+        //Given
         Car car1 = new Car(1L, "Fiat", "126p", "Blue", 1990);
         Car car2 = new Car(2L, "Skoda", "500", "White", 2000);
 
@@ -48,11 +49,7 @@ public class CarControllerTest {
         carList.add(car2);
 
         when(carDao.findAll()).thenReturn(carList);
-        when(carDao.findById(CAR_ID)).thenReturn(carList.get((int)(CAR_ID - 1)));
-    }
 
-    @Test
-    public void shouldGetCars() throws Exception{
         //When & Then
         mockMvc.perform(get("/cars"))
                 .andExpect(status().isOk())
@@ -90,6 +87,17 @@ public class CarControllerTest {
 
     @Test
     public void shouldGetCarsById() throws Exception{
+        //Given
+        Car car1 = new Car(1L, "Fiat", "126p", "Blue", 1990);
+        Car car2 = new Car(2L, "Skoda", "500", "White", 2000);
+
+        List<Car> carList = new ArrayList<>();
+        carList.add(car1);
+        carList.add(car2);
+
+        when(carDao.findAll()).thenReturn(carList);
+        when(carDao.findById(CAR_ID)).thenReturn(carList.get((int)(CAR_ID - 1)));
+
         //When & Then
         mockMvc.perform(get("/cars/carById/{id}", CAR_ID))
                 .andExpect(status().isOk())
@@ -143,6 +151,17 @@ public class CarControllerTest {
 
     @Test
     public void shouldRemoveCar() throws Exception{
+        //Given
+        //Given
+        Car car1 = new Car(1L, "Fiat", "126p", "Blue", 1990);
+        Car car2 = new Car(2L, "Skoda", "500", "White", 2000);
+
+        List<Car> carList = new ArrayList<>();
+        carList.add(car1);
+        carList.add(car2);
+
+        when(carDao.findAll()).thenReturn(carList);
+
         //When & Then
         mockMvc.perform(delete("/cars/removeCarById/{id}", CAR_ID)
                 .contentType(MediaType.APPLICATION_JSON))
