@@ -1,5 +1,6 @@
 package springcourse.homeworksecurity1;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -14,6 +15,13 @@ import java.util.Collections;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Value("${userAdminPassword}")
+    private String userAdminPassword;
+
+    @Value("${userUserPassword}")
+    private String userUserPassword;
+
     @Bean
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder();
@@ -23,12 +31,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         User userAdmin = new User(
                 "Jan",
-                getPasswordEncoder().encode("1234"),
+                getPasswordEncoder().encode(userAdminPassword),
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN")));
 
         User userUser = new User(
                 "Bob",
-                getPasswordEncoder().encode("1111"),
+                getPasswordEncoder().encode(userUserPassword),
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
 
         auth.inMemoryAuthentication().withUser(userAdmin);
