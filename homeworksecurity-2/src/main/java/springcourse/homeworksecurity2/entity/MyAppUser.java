@@ -20,6 +20,8 @@ public class MyAppUser implements UserDetails {
 
     private String password;
 
+    private boolean isEnabled;
+
     public Long getId() {
         return id;
     }
@@ -44,6 +46,10 @@ public class MyAppUser implements UserDetails {
         this.password = password;
     }
 
+    public void setEnabled(boolean enabled) {
+        isEnabled = enabled;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -61,7 +67,7 @@ public class MyAppUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isEnabled;
     }
 
     @Override

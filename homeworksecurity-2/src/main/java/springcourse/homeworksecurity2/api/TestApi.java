@@ -1,4 +1,4 @@
-package springcourse.kursspringboot2security.api;
+package springcourse.homeworksecurity2.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,7 +8,7 @@ import java.security.Principal;
 @RestController
 public class TestApi {
 
-    @GetMapping("/forAll")
+    @GetMapping("/success")
     public String forAll(){
         return "You have been logout";
     }
