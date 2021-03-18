@@ -22,12 +22,12 @@ public class MyAppUser implements UserDetails {
     private Long id;
 
     @Column(unique = true)
-    @Email(message = "Email should be valid")
-    @NotBlank(message = "Email is mandatory")
+    @Email
+    @NotBlank
     private String username;
 
-    @Size(min = 3, message = "Password must be min 3 characters")
-    @NotBlank(message = "Password is mandatory")
+    @Size(min = 3)
+    @NotBlank
     private String password;
 
     private boolean isEnabled;

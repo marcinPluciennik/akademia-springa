@@ -2,6 +2,7 @@ package springcourse.homeworksecurity2.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,7 +41,10 @@ public class MainController {
     }
 
     @RequestMapping("/register")
-    public ModelAndView register(@Validated MyAppUser myAppUser, HttpServletRequest request){
+    public ModelAndView register(@Validated MyAppUser myAppUser, BindingResult bindingResult, HttpServletRequest request){
+        if (bindingResult.hasErrors()){
+            return new ModelAndView("redirect:/singup");
+        }
         myAppUserService.addNewUser(myAppUser, request);
         return new ModelAndView("redirect:/login");
     }
