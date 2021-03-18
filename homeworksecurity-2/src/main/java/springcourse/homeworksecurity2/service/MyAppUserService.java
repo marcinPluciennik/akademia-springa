@@ -54,14 +54,10 @@ public class MyAppUserService {
 
         String token = UUID.randomUUID().toString();
 
-        VerificationToken verificationToken = new VerificationToken(myAppUser, token);
-        verificationTokenRepo.save(verificationToken);
-
-        String confirmationUrlUser = "http://" + request.getServerName() + ":" + request.getServerPort() +
-                request.getContextPath() + "/verify-token?token=" + token;
 
         try{
             LOGGER.info("CHOSEN ROLES: " + myAppUser.getRoles().toString());
+
             if (myAppUser.getRoles().contains("ROLE_ADMIN")){
                 VerificationTokenAdmin verificationTokenAdmin = new VerificationTokenAdmin(myAppUser, token);
                 verificationTokenAdminRepo.save(verificationTokenAdmin);
@@ -76,6 +72,13 @@ public class MyAppUserService {
                 myAppUserRepo.findMyAppUserByUsername(myAppUser.getUsername()).get().getRoles().remove("ROLE_ADMIN");
                 myAppUserRepo.save(myAppUser);
             }
+
+            VerificationToken verificationToken = new VerificationToken(myAppUser, token);
+            verificationTokenRepo.save(verificationToken);
+
+            String confirmationUrlUser = "http://" + request.getServerName() + ":" + request.getServerPort() +
+                    request.getContextPath() + "/verify-token?token=" + token;
+
             mailSenderService.sendMail(myAppUser.getUsername(),
                     "Verification Token",
                     confirmationUrlUser,
