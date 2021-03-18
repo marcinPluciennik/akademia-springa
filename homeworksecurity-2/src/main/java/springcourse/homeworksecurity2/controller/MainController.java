@@ -34,8 +34,8 @@ public class MainController {
     }
 
     @RequestMapping("/register")
-    public ModelAndView register(MyAppUser user, HttpServletRequest request){
-        myAppUserService.addNewUser(user, request);
+    public ModelAndView register(MyAppUser myAppUser, HttpServletRequest request){
+        myAppUserService.addNewUser(myAppUser, request);
         return new ModelAndView("redirect:/login");
     }
 
