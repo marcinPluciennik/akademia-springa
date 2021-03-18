@@ -56,17 +56,19 @@ public class MyAppUserService {
 
         VerificationToken verificationToken = new VerificationToken(myAppUser, token);
         verificationTokenRepo.save(verificationToken);
+
         String confirmationUrlUser = "http://" + request.getServerName() + ":" + request.getServerPort() +
                 request.getContextPath() + "/verify-token?token=" + token;
-
-        VerificationTokenAdmin verificationTokenAdmin = new VerificationTokenAdmin(myAppUser, token);
-        verificationTokenAdminRepo.save(verificationTokenAdmin);
-        String confirmationUrlUAdmin = "http://" + request.getServerName() + ":" + request.getServerPort() +
-                request.getContextPath() + "/verify-token-admin?token=" + token;
 
         try{
             LOGGER.info("CHOSEN ROLES: " + myAppUser.getRoles().toString());
             if (myAppUser.getRoles().contains("ROLE_ADMIN")){
+                VerificationTokenAdmin verificationTokenAdmin = new VerificationTokenAdmin(myAppUser, token);
+                verificationTokenAdminRepo.save(verificationTokenAdmin);
+
+                String confirmationUrlUAdmin = "http://" + request.getServerName() + ":" + request.getServerPort() +
+                        request.getContextPath() + "/verify-token-admin?token=" + token;
+
                 mailSenderService.sendMail(email_admin,
                         "Verification Token Admin",
                         confirmationUrlUAdmin,
@@ -88,6 +90,8 @@ public class MyAppUserService {
         myAppUser.setEnabled(true);
         myAppUserRepo.save(myAppUser);
         LOGGER.info("ROLE USER HAS BEEN ACTIVATED");
+        verificationTokenRepo.deleteByValue(token);
+        LOGGER.info("ACTIVATED TOKEN HAS BEEN REMOVED");
     }
 
     public void verifyTokenAdmin(String token){
@@ -96,5 +100,7 @@ public class MyAppUserService {
         myAppUser.setEnabled(true);
         myAppUserRepo.save(myAppUser);
         LOGGER.info("ROLE ADMIN HAS BEEN ACTIVATED");
+        verificationTokenAdminRepo.deleteByValue(token);
+        LOGGER.info("ACTIVATED TOKEN HAS BEEN REMOVED");
     }
 }
