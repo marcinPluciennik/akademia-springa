@@ -5,8 +5,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class MyAppUser implements UserDetails {
@@ -16,11 +21,21 @@ public class MyAppUser implements UserDetails {
     private Long id;
 
     @Column(unique = true)
+    @Email(message = "Email should be valid")
+    @NotNull(message = "Email cannot be null")
     private String username;
 
+    @Size(min = 3, max = 10, message
+            = "Password must be between 3 and 10 characters")
+    @NotNull(message = "Password cannot be null")
     private String password;
 
     private boolean isEnabled;
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> roles = new HashSet<>();
+
 
     public Long getId() {
         return id;
@@ -50,6 +65,17 @@ public class MyAppUser implements UserDetails {
         isEnabled = enabled;
     }
 
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
+    public MyAppUser() {
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -72,6 +98,8 @@ public class MyAppUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
+        return getRoles().stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
     }
 }

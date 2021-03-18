@@ -6,6 +6,5 @@ import springcourse.homeworksecurity2.entity.VerificationToken;
 
 @Repository
 public interface VerificationTokenRepo extends JpaRepository<VerificationToken, Long> {
-
     VerificationToken findByValue(String value);
 }
