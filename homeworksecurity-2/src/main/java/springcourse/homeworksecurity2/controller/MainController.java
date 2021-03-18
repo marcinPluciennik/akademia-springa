@@ -28,6 +28,11 @@ public class MainController {
         return "login";
     }
 
+    @RequestMapping("/logout")
+    public String logout(){
+        return "success";
+    }
+
     @RequestMapping("/singup")
     public ModelAndView singup(){
         return new ModelAndView("registration", "user", new MyAppUser());

@@ -8,9 +8,9 @@ import java.security.Principal;
 @RestController
 public class TestApi {
 
-    @GetMapping("/success")
+    @GetMapping("/forAll")
     public String forAll(){
-        return "You have been logout";
+        return "Bla bla bla";
     }
 
     @GetMapping("/forUser")
