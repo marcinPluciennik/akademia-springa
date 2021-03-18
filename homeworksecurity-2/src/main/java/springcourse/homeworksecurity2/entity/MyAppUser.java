@@ -5,8 +5,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.HashSet;
@@ -22,16 +23,14 @@ public class MyAppUser implements UserDetails {
 
     @Column(unique = true)
     @Email(message = "Email should be valid")
-    @NotNull(message = "Email cannot be null")
+    @NotBlank(message = "Email is mandatory")
     private String username;
 
-    @Size(min = 3, max = 10, message
-            = "Password must be between 3 and 10 characters")
-    @NotNull(message = "Password cannot be null")
+    @Size(min = 3, message = "Password must be min 3 characters")
+    @NotBlank(message = "Password is mandatory")
     private String password;
 
     private boolean isEnabled;
-
 
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles = new HashSet<>();
