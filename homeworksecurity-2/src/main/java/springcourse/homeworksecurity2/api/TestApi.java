@@ -10,7 +10,7 @@ public class TestApi {
 
     @GetMapping("/forAll")
     public String forAll(){
-        return "Bla bla bla";
+        return "Welcome!";
     }
 
     @GetMapping("/forUser")
