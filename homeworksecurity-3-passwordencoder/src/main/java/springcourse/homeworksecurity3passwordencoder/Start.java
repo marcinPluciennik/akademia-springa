@@ -3,6 +3,7 @@ package springcourse.homeworksecurity3passwordencoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import springcourse.homeworksecurity3passwordencoder.encoder.MarcinPasswordEncoder;
 import springcourse.homeworksecurity3passwordencoder.entity.App3User;
 import springcourse.homeworksecurity3passwordencoder.repo.App3UserRepo;
 
@@ -11,11 +12,16 @@ public class Start {
 
     private PasswordEncoder passwordEncoder;
     private App3UserRepo app3UserRepo;
+    private MarcinPasswordEncoder marcinPasswordEncoder;
 
     @Autowired
-    public Start(PasswordEncoder passwordEncoder, App3UserRepo app3UserRepo) {
+    public Start(PasswordEncoder passwordEncoder, App3UserRepo app3UserRepo, MarcinPasswordEncoder marcinPasswordEncoder) {
         this.passwordEncoder = passwordEncoder;
         this.app3UserRepo = app3UserRepo;
+        this.marcinPasswordEncoder = marcinPasswordEncoder;
+
+        marcinPasswordEncoder.encode("blQ!@#$DVRC");
+        marcinPasswordEncoder.matches("blQ!@#$DVRC","@1MARCIN@u803QlFXHF98108813364353668868267");
 
         App3User app3User = new App3User();
         app3User.setUsername("Marcin");
