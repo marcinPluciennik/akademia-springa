@@ -25,13 +25,13 @@ public class MarcinPasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence charSequence, String s) {
-        String salt = s.substring(9,19);
-        String password = encode(charSequence);
-        password = password.substring(0,9) + salt + password.substring(19);
-        LOGGER.info("USER DB PASSWORD : " + s);
-        LOGGER.info("USER RAW PASSWORD ENCODED: " + password);
-        LOGGER.info("PASSWORDS MATCH ?: " + s.equals(password));
-        return  s.equals(password);
+        final int CHAR_NUMBER_TO_CUT_MAIN_PASSWORD = 19;
+        String mainPasswordDB = s.substring(CHAR_NUMBER_TO_CUT_MAIN_PASSWORD);
+        String mainPasswordEncoded = encode(charSequence).substring(CHAR_NUMBER_TO_CUT_MAIN_PASSWORD);
+        LOGGER.info("USER DB MAIN PASSWORD : " + mainPasswordDB);
+        LOGGER.info("USER RAW MAIN PASSWORD ENCODED: " + mainPasswordEncoded);
+        LOGGER.info("PASSWORDS MATCH ?: " + mainPasswordDB.equals(mainPasswordEncoded));
+        return  mainPasswordDB.equals(mainPasswordEncoded);
     }
 
     public String getEncoderVersion(){
@@ -40,9 +40,9 @@ public class MarcinPasswordEncoder implements PasswordEncoder {
 
     public String getSalt(){
         int length = 10;
-        boolean useLetters = true;
-        boolean useNumbers = true;
-        String generatedString = RandomStringUtils.random(length, useLetters, useNumbers);
+        boolean isUsedLetters = true;
+        boolean isUseNumbers = true;
+        String generatedString = RandomStringUtils.random(length, isUsedLetters, isUseNumbers);
         return generatedString;
     }
 }

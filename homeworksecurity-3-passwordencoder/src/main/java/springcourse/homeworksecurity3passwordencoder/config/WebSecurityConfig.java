@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import springcourse.homeworksecurity3passwordencoder.encoder.MarcinPasswordEncoder;
 
 import java.util.Collections;
 
@@ -22,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Primary
     public PasswordEncoder getPasswordEncoder(){
-        return new BCryptPasswordEncoder();
+        return new MarcinPasswordEncoder();
     }
 
     private UserDetailsService userDetailsService;

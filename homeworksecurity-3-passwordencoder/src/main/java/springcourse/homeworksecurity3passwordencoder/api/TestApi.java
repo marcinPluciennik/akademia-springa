@@ -10,6 +10,6 @@ public class TestApi {
 
     @GetMapping("/forUser")
     public String forUser(Principal principal){
-        return "Hello User: " + principal.getName();
+        return "Hello User: " + principal.getName() + " - NICE PASSWORD ENCODER :-P";
     }
 }

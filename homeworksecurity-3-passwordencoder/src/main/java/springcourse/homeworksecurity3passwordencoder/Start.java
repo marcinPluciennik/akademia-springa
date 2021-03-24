@@ -1,5 +1,7 @@
 package springcourse.homeworksecurity3passwordencoder;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -20,12 +22,18 @@ public class Start {
         this.app3UserRepo = app3UserRepo;
         this.marcinPasswordEncoder = marcinPasswordEncoder;
 
-        marcinPasswordEncoder.encode("blQ!@#$DVRC");
-        marcinPasswordEncoder.matches("blQ!@#$DVRC","@1MARCIN@u803QlFXHF98108813364353668868267");
+        final Logger LOGGER = LoggerFactory.getLogger(Start.class);
+
+        final String USERNAME = "Marcin";
+        final String PASSWORD = "Marcin123";
 
         App3User app3User = new App3User();
-        app3User.setUsername("Marcin");
-        app3User.setPassword(passwordEncoder.encode("Marcin123"));
+        app3User.setUsername(USERNAME);
+        app3User.setPassword(passwordEncoder.encode(PASSWORD));
         app3UserRepo.save(app3User);
+
+        marcinPasswordEncoder.encode(PASSWORD);
+        marcinPasswordEncoder.matches(PASSWORD,app3UserRepo.findAllByUsername(USERNAME).get().getPassword());
+        LOGGER.info("FULL USER PASSWORD IN THE DATABASE: " + app3UserRepo.findAllByUsername(USERNAME).get().getPassword());
     }
 }
