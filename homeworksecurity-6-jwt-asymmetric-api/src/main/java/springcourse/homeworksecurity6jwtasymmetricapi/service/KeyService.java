@@ -1,38 +1,20 @@
-package springcourse.homeworksecurity6jwtclient.keyPairGenerator;
+package springcourse.homeworksecurity6jwtasymmetricapi.service;
 
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.*;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
 @Service
-public class KeysGenerator {
-
-    public KeyPair generateKeyPair(){
-        try{
-            SecureRandom secureRandom = new SecureRandom();
-            java.security.KeyPairGenerator keyPairGenerator = java.security.KeyPairGenerator.getInstance("RSA");
-            keyPairGenerator.initialize(2048, secureRandom);
-            return keyPairGenerator.generateKeyPair();
-        }catch (NoSuchAlgorithmException e){
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
-
-    public void saveKeyPair(){
-        KeyPair keyPair = generateKeyPair();
-        try{
-            Files.write(Paths.get("src/main/resources/private.key"), keyPair.getPrivate().getEncoded());
-            Files.write(Paths.get("src/main/resources/public.key"), keyPair.getPublic().getEncoded());
-        }catch (IOException e){
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
+public class KeyService {
 
     public PrivateKey getPrivateKey(){
         try{

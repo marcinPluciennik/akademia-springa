@@ -1,4 +1,4 @@
-package springcourse.homeworksecurity6jwtasymmetricapi;
+package springcourse.homeworksecurity6jwtasymmetricapi.api;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

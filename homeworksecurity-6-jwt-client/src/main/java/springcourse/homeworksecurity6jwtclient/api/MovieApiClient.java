@@ -12,6 +12,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import springcourse.homeworksecurity6jwtclient.keyPairGenerator.KeysGenerator;
 
+import java.security.interfaces.RSAPrivateKey;
 import java.util.stream.Stream;
 
 @Controller
@@ -23,11 +24,9 @@ public class MovieApiClient {
     public MovieApiClient(KeysGenerator keysGenerator) {
         this.keysGenerator = keysGenerator;
 
+        //keysGenerator.saveKeyPair(); - for one-time use (generates and save client's keys)
         addMovies();
         getMovies();
-        //keysGenerator.saveKeyPair(); - for one-time use (generates and save keys)
-        keysGenerator.getPublicKey();
-        keysGenerator.getPrivateKey();
     }
 
     private void addMovies() {
@@ -65,9 +64,7 @@ public class MovieApiClient {
     }
 
     private String generateJwt(boolean isAdmin) {
-        Algorithm algorithm = Algorithm.HMAC512("bPeShVmYq3t6w9z$B&E)H@McQfTjWnZr4u7x!A%D*F-JaNdRgUkXp2s5v8y/B?E(");
-        //Algorithm algorithm = Algorithm.RSA256(null, (RSAPrivateKey) keysGenerator.getPrivateKey());
+        Algorithm algorithm = Algorithm.RSA256(null, (RSAPrivateKey) keysGenerator.getPrivateKey());
         return JWT.create().withClaim("admin", isAdmin).sign(algorithm);
     }
-
 }
